@@ -1,2 +1,2 @@
 
-Some stuff that may help.
+Some stuff that maybe helpful.
