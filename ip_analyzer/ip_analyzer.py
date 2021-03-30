@@ -13,7 +13,7 @@ import sys
 
 class queryAPI:
 
-    tb_api_key = "71cd7ae837a940c6883aed2140bc116c0fb4c7966b30477e96d73ee433e82f5f"     # <- Your api key
+    tb_api_key = ""     # <- Your api key
     #vt_api_key = ""
 
     def querySB(self,ip):
