@@ -13,13 +13,13 @@
 
 ​	Easy to use.
 
-<\br>
+</br>
 
 ![image-20210330162040455](README.assets/image-20210330162040455.png)
 
 
 
-Example: <\br>
+Example: </br>
 
 ​	Default query and parse:
 
