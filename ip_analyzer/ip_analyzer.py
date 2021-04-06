@@ -233,7 +233,8 @@ if __name__ == '__main__':
     if args.target:
         # Single query
         target_data = getData(target,query_type)
-        saveToFile(target,target_data,query_type)
+        filepath = saveToFile(target,target_data,query_type)
+        parseJSON(filepath,query_type)
     if args.filepath:
         # Batch query
         filepath = args.filepath
