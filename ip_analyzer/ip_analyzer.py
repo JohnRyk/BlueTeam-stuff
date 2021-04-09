@@ -154,7 +154,8 @@ def example():
 def saveToFile(name,data,query_type):
     if query_type == None:
         query_type = "sb"
-    date = time.strftime("%Y-%m-%d_%H%M%S",time.localtime())
+    #date = time.strftime("%Y-%m-%d_%H%M%S",time.localtime())
+    date = time.strftime("%Y-%m-%d_%H%M",time.localtime())
     temp_filename = "%s_%s_%s" % (name,date,query_type)
     try:
         #print(data)
@@ -164,6 +165,7 @@ def saveToFile(name,data,query_type):
         print(e)
         return
     print("[+] Result save to file   -->   %s" % temp_filename)
+    return temp_filename
 
 
 def parseJSON(file_path, query_type):
@@ -198,21 +200,27 @@ def parseJSON(file_path, query_type):
     elif query_type == "tb": # parse threatbook query result json
         for ip,ip_data in json_data.items():
             print('\n'+'-' * 16 + "\n%s\t|\n" % ip + '-' * 80)
-            ip_data = json.loads(ip_data)
-            if ip_data['data'][ip]['severity'] == 'info':
-                print("%20s %59s" % ("severity", colored(ip_data['data'][ip]['severity'],"green")))
-            else:
-                print("%20s %59s" % ("severity", colored(ip_data['data'][ip]['severity'],"red")))
-                print("%20s %59s" % ("tags_classes", colored(ip_data['data'][ip]['tags_classes'],"purple")))
-            print("%20s %59s" % ("judgments", colored(ip_data['data'][ip]['judgments'],"yellow")))
-            print("%20s %50s" % ("country", ip_data['data'][ip]['basic']['location']['country'] ))
-            print("%20s %50s" % ("province",ip_data['data'][ip]['basic']['location']['province'] ))
-            print("%20s %50s" % ("city",ip_data['data'][ip]['basic']['location']['city'] ))
-            if ip_data['data'][ip]['is_malicious']:
-                print("%20s %59s" % ("is_malicious", colored(ip_data['data'][ip]['is_malicious'],"red")))
-            else:
-                print("%20s %59s" % ("is_malicious", colored(ip_data['data'][ip]['is_malicious'],"green")))
-            print("%20s %59s" % ("confidence_level",  colored(ip_data['data'][ip]['confidence_level'],"blue")))
+            try:
+                ip_data = json.loads(ip_data)
+                if ip_data['data'][ip]['severity'] == 'info':
+                    print("%20s %59s" % ("severity", colored(ip_data['data'][ip]['severity'],"green")))
+                else:
+                    print("%20s %59s" % ("severity", colored(ip_data['data'][ip]['severity'],"red")))
+                    print("%20s %59s" % ("tags_classes", colored(ip_data['data'][ip]['tags_classes'],"blue")))
+                print("%20s %59s" % ("judgments", colored(ip_data['data'][ip]['judgments'],"yellow")))
+                print("%20s %50s" % ("country", ip_data['data'][ip]['basic']['location']['country'] ))
+                print("%20s %50s" % ("province",ip_data['data'][ip]['basic']['location']['province'] ))
+                print("%20s %50s" % ("city",ip_data['data'][ip]['basic']['location']['city'] ))
+                if ip_data['data'][ip]['is_malicious']:
+                    print("%20s %59s" % ("is_malicious", colored(ip_data['data'][ip]['is_malicious'],"red")))
+                else:
+                    print("%20s %59s" % ("is_malicious", colored(ip_data['data'][ip]['is_malicious'],"green")))
+                print("%20s %59s" % ("confidence_level",  colored(ip_data['data'][ip]['confidence_level'],"blue")))
+            except Exception as e:
+                for field,value in ip_data.items():
+                    if field == "ip":
+                        print("%20s %59s" % (field,colored(value,"blue")))
+                        continue
         pass
 
 
